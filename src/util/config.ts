@@ -1,9 +1,10 @@
 const defaultSettings =  {
   "server": "",
   "protocol": "wechat-video",
-  "obfs": "",
+  "auth_str": "",
   "up_mbps": 10,
   "down_mbps": 500,
+  "fast_open": true,
   "acl": "",
   "mmdb": "",
   "socks5": {
@@ -21,7 +22,7 @@ export const mergeSettings = (
 ) => {
   let next = Object.assign({}, defaultSettings, {
     server: `${server.address}:${server.port}`,
-    obfs: server.password,
+    auth_str: server.password,
     acl: `${resDir}etc/client.acl`,
     mmdb: `${resDir}etc/GeoLite2-Country.mmdb`,
     socks5: {

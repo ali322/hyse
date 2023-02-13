@@ -8,5 +8,5 @@ build:
 opz:
 	@upx --ultra-brute src-tauri/target/release/bundle/macos/Hyse.app/Contents/macOS/Hyse
 cp:
-	@cp -R src-tauri/target/release/bundle/macos/Vess.app /Applications
+	@cp -R src-tauri/target/release/bundle/macos/Hyse.app /Applications
 .PHONY: icon build opz
