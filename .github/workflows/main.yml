@@ -33,8 +33,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tagName: vess-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-        releaseName: "Vess v__VERSION__"
+        tagName: hyse-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+        releaseName: "Hyse v__VERSION__"
         releaseBody: "See the assets to download this version and install."
         releaseDraft: true
         prerelease: false
