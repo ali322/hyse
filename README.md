@@ -11,7 +11,7 @@ Download from [Releases](https://github.com/ali322/hyse/releases)
 
 ## How does Hyse work
 
-Vess provides a GUI to generate the config file for hysteria. It includes hysteria's binary executable in the app bundle. 
+Hyse provides a GUI to generate the config file for hysteria. It includes hysteria's binary executable in the app bundle. 
 
 ## Usage
 
@@ -40,7 +40,7 @@ copy app to /Applications (mac only)
 This tool is mainly for personal usage. For professional users and technique 
 support, commercial software like proxifier is recommended.
 
-The developer currently does not have enough time to add more features to Vess, nor to merge PRs. However, forking and releasing your own version are always welcome.
+The developer currently does not have enough time to add more features to Hyse, nor to merge PRs. However, forking and releasing your own version are always welcome.
 
 
 ## License
