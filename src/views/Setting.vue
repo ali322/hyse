@@ -21,9 +21,15 @@
       </div>
     </div>
     <div class="flex items-center h-10 pb-4">
-      <label class="text-gray-500 text-sm">System Proxy</label>
-      <div class="flex-1 flex justify-end items-center">
-        <input type="checkbox" class="toggle toggle-xs" v-model="isSysProxyEnabled" @change="toggleSysProxy"/>
+      <span class="text-gray-500 text-sm">System Proxy</span>
+      <div class="flex-1 flex justify-end items-center text-right">
+        <label for="toggle" class="flex items-center cursor-pointer">
+          <div class="relative">
+            <input type="checkbox" :disabled="!running" id="toggle" class="sr-only" v-model="isSysProxyEnabled" @change="toggleSysProxy">
+            <div class="block bg-gray-200 w-8 h-5 rounded-full"></div>
+            <div class="dot absolute left-1 top-1 bg-white w-3 h-3 rounded-full transition"></div>
+          </div>
+        </label>
       </div>
     </div>
     <Toast ref="toastRef" />
@@ -43,6 +49,7 @@ const toastRef = ref<InstanceType<typeof Toast>>()
 const settingStore = useSettingStore()
 const serverStore = useServerStore()
 const { socksPort, httpPort, isSysProxyEnabled } = storeToRefs(settingStore)
+const { running } = storeToRefs(serverStore)
 
 const restore = () => {
   settingStore.restoreSetting()

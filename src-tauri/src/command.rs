@@ -1,5 +1,5 @@
 use pinger::{ping, PingResult};
-use sysproxy::Sysproxy;
+use crate::sysproxy::Sysproxy;
 use std::fs;
 use tauri::{
     api::process::{Command, CommandEvent},
@@ -72,7 +72,7 @@ fn run_sidecar(window: tauri::Window, app_handle: tauri::AppHandle, config: Stri
 
 #[tauri::command]
 fn toggle_sysproxy(is_enabled: bool, port: u16) {
-  println!("is actived {} {}", is_enabled, port);
+  // println!("is actived {} {}", is_enabled, port);
   let sysproxy = Sysproxy{
     enable: is_enabled,
     host: "127.0.0.1".into(),

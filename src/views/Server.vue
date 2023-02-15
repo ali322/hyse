@@ -22,7 +22,7 @@ const confirmRef = ref<InstanceType<typeof Confirm>>()
 const serverStore = useServerStore()
 const { servers, selected, running } = storeToRefs(serverStore)
 const settingStore = useSettingStore()
-const { socksPort, httpPort } = storeToRefs(settingStore)
+const { socksPort, httpPort,isSysProxyEnabled } = storeToRefs(settingStore)
 
 watch(() => servers.value.length, (curr: number, prev: number) => {
   if (prev === 0 && curr > 0) {
@@ -66,6 +66,9 @@ const stopOne = () => {
   event.emit('stop-sidecar')
   serverStore.purgeOutput()
   running.value = false
+  isSysProxyEnabled.value = false
+  tauri.invoke('toggle_sysproxy', {isEnabled: false, port: socksPort.value})
+
 }
 let timer: any
 const runOne = () => {

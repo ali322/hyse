@@ -12,7 +12,6 @@
     "@tauri-apps/api": "^1.2.0",
     "@vicons/material": "^0.12.0",
     "@vicons/utils": "^0.1.4",
-    "daisyui": "^2.50.0",
     "just-clone": "^6.2.0",
     "pinia": "^2.0.28",
     "pinia-plugin-persistedstate": "^3.0.1",

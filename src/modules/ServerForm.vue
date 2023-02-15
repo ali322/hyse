@@ -6,12 +6,10 @@
         <input type="text" spellcheck="false" :disabled="running" v-model="tag"
           class="leading-7 rounded border border-gray-300 text-sm px-2 w-20 disabled:text-gray-500" />
       </div>
-      <button class="w-20 h-[30px] flex items-center btn btn-xs"
-        :class="running ? 'hover:bg-red-500 bg-red-500 border-red-500 hover:border-red-500' : 'hover:bg-blue-500 bg-blue-500 hover:border-blue-500 border-blue-500'"
-        @click="run">
+      <button class="w-16 h-[30px] flex items-center" :class="running ? 'btn-danger' : 'btn-primary'" @click="run">
         <StopRound class="w-6 h-6" v-if="running"></StopRound>
         <PlayArrowRound class="w-5 h-5" v-else></PlayArrowRound>
-        <span class="leading-7 text-xs">{{ running? 'stop': 'run' }}</span>
+        <span class="mx-1 leading-7">{{ running ? 'stop' : 'run' }}</span>
       </button>
     </div>
     <div class="px-4">

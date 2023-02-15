@@ -1129,12 +1129,15 @@ checksum = "21dec9db110f5f872ed9699c3ecf50cf16f423502706ba5c72462e28d3157573"
 name = "hyse"
 version = "0.0.0"
 dependencies = [
+ "interfaces",
  "pinger",
  "serde",
  "serde_json",
- "sysproxy",
  "tauri",
  "tauri-build",
+ "thiserror",
+ "winapi",
+ "winreg",
 ]
 
 [[package]]
@@ -2551,18 +2554,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
-]
-
-[[package]]
-name = "sysproxy"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "58c9e02068d2fd8c0bbfc70ca394b369f59eb9f478b23b9269da47fa7150f006"
-dependencies = [
- "interfaces",
- "thiserror",
- "winapi",
- "winreg",
 ]
 
 [[package]]
