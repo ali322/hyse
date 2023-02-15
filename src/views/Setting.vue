@@ -20,6 +20,12 @@
         </div>
       </div>
     </div>
+    <div class="flex items-center h-10 pb-4">
+      <label class="text-gray-500 text-sm">System Proxy</label>
+      <div class="flex-1 flex justify-end items-center">
+        <input type="checkbox" class="toggle toggle-xs" v-model="isSysProxyEnabled" @change="toggleSysProxy"/>
+      </div>
+    </div>
     <Toast ref="toastRef" />
   </div>
 </template>
@@ -36,10 +42,14 @@ import { clearCache } from '@/util'
 const toastRef = ref<InstanceType<typeof Toast>>()
 const settingStore = useSettingStore()
 const serverStore = useServerStore()
-const { socksPort, httpPort } = storeToRefs(settingStore)
+const { socksPort, httpPort, isSysProxyEnabled } = storeToRefs(settingStore)
 
 const restore = () => {
   settingStore.restoreSetting()
+}
+
+const toggleSysProxy = () => {
+  tauri.invoke('toggle_sysproxy', {isEnabled: isSysProxyEnabled.value, port: socksPort.value})
 }
 
 const clearCache = () => {
