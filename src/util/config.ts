@@ -7,6 +7,7 @@ const defaultSettings =  {
   "fast_open": true,
   "acl": "",
   "mmdb": "",
+  "alpn": "h3",
   "socks5": {
     "listen": ""
   },
