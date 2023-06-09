@@ -2,7 +2,7 @@ use pinger::{ping, PingResult};
 use crate::sysproxy::Sysproxy;
 use std::fs;
 use tauri::{
-    api::process::{Command, CommandEvent},
+    api::process::{Command, CommandEvent, self},
     Builder, Wry,
 };
 
@@ -71,6 +71,40 @@ fn run_sidecar(window: tauri::Window, app_handle: tauri::AppHandle, config: Stri
 }
 
 #[tauri::command]
+fn stop_sidecar() {
+  process::kill_children();
+}
+
+#[tauri::command]
+fn run_clash(window: tauri::Window, app_handle: tauri::AppHandle, config: String) {
+    let res_dir = app_handle
+        .path_resolver()
+        .resource_dir()
+        .expect("Failed to get resource_dir");
+    let dest_dir = res_dir.join("etc");
+    if !dest_dir.is_dir() {
+        fs::create_dir_all(&dest_dir).expect("Failed to create etc dir");
+    }
+    fs::write(dest_dir.join("clash.yaml"), config).expect("Failed to write clash.yaml");
+    tauri::async_runtime::spawn(async move {
+      let (mut rx, _child) = Command::new_sidecar("clash")
+          .expect("Failed to setup `clash` sidecar")
+          .args(vec!["-f", dest_dir.join("clash.yaml").to_str().unwrap()])
+          .current_dir(res_dir)
+          .spawn()
+          .expect("Failed to spawn clash run");
+      while let Some(event) = rx.recv().await {
+          if let CommandEvent::Stdout(line) = event {
+              println!("{}", &line);
+              window
+                  .emit("sidecar-running", Some(format!("{}", line)))
+                  .expect("failed to emit event");
+          }
+      }
+  });
+}
+
+#[tauri::command]
 fn toggle_sysproxy(is_enabled: bool, port: u16) {
   // println!("is actived {} {}", is_enabled, port);
   let sysproxy = Sysproxy{
@@ -83,5 +117,5 @@ fn toggle_sysproxy(is_enabled: bool, port: u16) {
 }
 
 pub fn apply_command(builder: Builder<Wry>) -> Builder<Wry> {
-    builder.invoke_handler(tauri::generate_handler![run_sidecar, latency, latencies, toggle_sysproxy])
+    builder.invoke_handler(tauri::generate_handler![run_sidecar, stop_sidecar, latency, run_clash, latencies, toggle_sysproxy])
 }

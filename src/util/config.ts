@@ -29,9 +29,9 @@ export const mergeSettings = (
     socks5: {
       listen: `127.0.0.1:${settings.socksPort}`
     },
-    http: {
-      listen: `127.0.0.1:${settings.httpPort}`
-    }
+    // http: {
+    //   listen: `127.0.0.1:${settings.httpPort}`
+    // }
   })
   return next
 }

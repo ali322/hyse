@@ -15,6 +15,7 @@ import { mergeSettings } from '@/util/config'
 import { event, tauri } from '@tauri-apps/api'
 import useServerStore from '@/store/server'
 import useSettingStore from '@/store/setting'
+import clashSettings from '@/util/clash'
 import ServerList from '@/modules/ServerList.vue'
 import ServerForm from '@/modules/ServerForm.vue'
 
@@ -22,7 +23,7 @@ const confirmRef = ref<InstanceType<typeof Confirm>>()
 const serverStore = useServerStore()
 const { servers, selected, running } = storeToRefs(serverStore)
 const settingStore = useSettingStore()
-const { socksPort, httpPort,isSysProxyEnabled } = storeToRefs(settingStore)
+const { socksPort, relayPort, httpPort,isSysProxyEnabled } = storeToRefs(settingStore)
 
 watch(() => servers.value.length, (curr: number, prev: number) => {
   if (prev === 0 && curr > 0) {
@@ -60,6 +61,8 @@ const startOne = async () => {
   let resDir = await resourceDir()
   const config = mergeSettings(server,{ httpPort: httpPort.value, socksPort: socksPort.value}, resDir)
   tauri.invoke('run_sidecar', { config: JSON.stringify(config, null, 2) })
+  const next = clashSettings(socksPort.value, relayPort.value)
+  tauri.invoke('run_clash', {config: next})
   running.value = true
 }
 const stopOne = () => {

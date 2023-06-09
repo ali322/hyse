@@ -13,6 +13,12 @@
       </div>
     </div>
     <div class="flex items-center h-10 pb-4">
+      <label class="text-gray-500 text-sm">Relay Port</label>
+      <div class="flex-1 flex justify-end items-center">
+        <input type="text" v-model="relayPort" class="py-1 rounded border border-gray-300 text-xs px-2 w-16" />
+      </div>
+    </div>
+    <div class="flex items-center h-10 pb-4">
       <label class="text-gray-500 text-sm">Clear Cache</label>
       <div class="flex-1 flex justify-end items-center">
         <div class="ml-4" @click="clearCache">
@@ -50,6 +56,15 @@ const settingStore = useSettingStore()
 const serverStore = useServerStore()
 const { socksPort, httpPort, isSysProxyEnabled } = storeToRefs(settingStore)
 const { running } = storeToRefs(serverStore)
+
+const relayPort = computed({
+  get() {
+    return settingStore.relayPort
+  },
+  set(val) {
+    settingStore.relayPort = val
+  }
+})
 
 const restore = () => {
   settingStore.restoreSetting()
