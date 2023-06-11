@@ -11,7 +11,8 @@ import { storeToRefs } from 'pinia'
 import { watch, ref } from 'vue'
 import { resourceDir } from '@tauri-apps/api/path'
 import Confirm from '@/components/Confirm.vue'
-import { mergeSettings } from '@/util/config'
+// import { mergeSettings } from '@/util/config'
+import mergeSettings from '@/util/config_v2'
 import { event, tauri } from '@tauri-apps/api'
 import useServerStore from '@/store/server'
 import useSettingStore from '@/store/setting'
@@ -59,9 +60,10 @@ event.listen('sidecar-running', (evt: { payload: string }) => {
 const startOne = async () => {
   const server = servers.value[selected.value]
   let resDir = await resourceDir()
-  const config = mergeSettings(server,{ httpPort: httpPort.value, socksPort: socksPort.value}, resDir)
-  tauri.invoke('run_sidecar', { config: JSON.stringify(config, null, 2) })
-  const next = clashSettings(socksPort.value, relayPort.value)
+  const config = mergeSettings(server,{ httpPort: httpPort.value, socksPort: socksPort.value})
+  // tauri.invoke('run_sidecar', { config: JSON.stringify(config, null, 2) })
+  tauri.invoke('run_sidecar', { config })
+  const next = clashSettings(socksPort.value, relayPort.value, resDir)
   tauri.invoke('run_clash', {config: next})
   running.value = true
 }

@@ -51,11 +51,11 @@ fn run_sidecar(window: tauri::Window, app_handle: tauri::AppHandle, config: Stri
     if !dest_dir.is_dir() {
         fs::create_dir_all(&dest_dir).expect("Failed to create etc dir");
     }
-    fs::write(dest_dir.join("config.json"), config).expect("Failed to write config.json");
+    fs::write(dest_dir.join("config.yaml"), config).expect("Failed to write config.json");
     tauri::async_runtime::spawn(async move {
-        let (mut rx, _child) = Command::new_sidecar("hysteria")
+        let (mut rx, _child) = Command::new_sidecar("hysteria-v2")
             .expect("Failed to setup `hysteria` sidecar")
-            .args(vec!["-c", dest_dir.join("config.json").to_str().unwrap()])
+            .args(vec!["client", "-c", dest_dir.join("config.yaml").to_str().unwrap()])
             .current_dir(res_dir)
             .spawn()
             .expect("Failed to spawn hysteria run");

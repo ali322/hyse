@@ -33,6 +33,13 @@
           class="leading-7 rounded border border-gray-300 text-sm px-2 w-64 disabled:text-gray-500" />
       </div>
     </div>
+    <div class="px-4">
+      <div class="flex items-center py-2 text-left">
+        <label class="mr-6 text-gray-500 w-20 text-sm">SNI</label>
+        <input type="text" spellcheck="false" :disabled="running" v-model="sni"
+          class="leading-7 rounded border border-gray-300 text-sm px-2 w-64 disabled:text-gray-500" />
+      </div>
+    </div>
     <Toast ref="toastRef" />
   </div>
 </template>
@@ -96,6 +103,15 @@ const password = computed({
   },
   set(val) {
     server.value.password = val
+    onServerUpdate()
+  }
+})
+const sni = computed({
+  get() {
+    return server.value.sni
+  },
+  set(val) {
+    server.value.sni = val
     onServerUpdate()
   }
 })

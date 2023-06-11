@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "Hyse",
-    "version": "1.0.3"
+    "version": "2.0.1"
   },
   "tauri": {
     "pattern": {
@@ -25,7 +25,7 @@
         "all": false,
         "sidecar": true,
         "scope": [
-          { "name": "bin/hysteria", "sidecar": true },
+          { "name": "bin/hysteria-v2", "sidecar": true },
           { "name": "bin/clash", "sidecar": true }
         ]
       },
@@ -41,7 +41,7 @@
       "deb": {
         "depends": []
       },
-      "externalBin": ["bin/hysteria", "bin/clash"],
+      "externalBin": ["bin/hysteria-v2", "bin/clash"],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
