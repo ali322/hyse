@@ -21,9 +21,10 @@ export default (server: Record<string, any>, settings: Record<string, any>) => {
       up: '100 mbps',
       down: '100 mbps'
     },
-    fastOpen: true,
+    fastOpen: server.fastOpen || false,
     socks5: {
-      listen: `127.0.0.1:${settings.socksPort}`
+      listen: `127.0.0.1:${settings.socksPort}`,
+      disableUDP: server.disableUDP || false
     }
   })
   return config

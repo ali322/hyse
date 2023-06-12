@@ -30,7 +30,7 @@ interface Pos {
 }
 
 const props = defineProps<{
-  value: string | number,
+  value: string | number | boolean,
   disabled?: boolean
 }>()
 
@@ -43,7 +43,7 @@ let current = computed({
   get() {
     return props.value
   },
-  set(val: string | number) {
+  set(val: string | number | boolean) {
     emit('update:value', val)
     if(props.value !== val) {
       emit('change', val)

@@ -7,7 +7,7 @@
 import { getCurrentInstance, computed, onMounted, useAttrs } from 'vue'
 
 interface Props {
-  value: string | number
+  value: string | number | boolean
 }
 
 let exposed: Record<string, any> = {}

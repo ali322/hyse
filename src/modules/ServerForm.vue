@@ -40,6 +40,24 @@
           class="leading-7 rounded border border-gray-300 text-sm px-2 w-64 disabled:text-gray-500" />
       </div>
     </div>
+    <div class="px-4">
+      <div class="flex items-center py-2 text-left">
+        <label class="mr-6 text-gray-500 w-20 text-sm">DisableUDP</label>
+        <Select id="fl" class="rounded w-56" v-model:value="disableUDP" :disabled="running">
+          <Option :value="true">true</Option>
+          <Option :value="false">false</Option>
+        </Select>
+      </div>
+    </div> 
+    <div class="px-4">
+      <div class="flex items-center py-2 text-left">
+        <label class="mr-6 text-gray-500 w-20 text-sm">FastOpen</label>
+        <Select id="fl" class="rounded w-56" v-model:value="fastOpen" :disabled="running">
+          <Option :value="true">true</Option>
+          <Option :value="false">false</Option>
+        </Select>
+      </div>
+    </div>
     <Toast ref="toastRef" />
   </div>
 </template>
@@ -50,6 +68,8 @@ import { toRefs, ref, computed } from 'vue'
 import { debounce } from 'ts-debounce'
 import { PlayArrowRound, StopRound } from '@vicons/material'
 import Toast from '@/components/Toast.vue'
+import Select from '@/components/Select.vue'
+import Option from '@/components/Option.vue'
 
 interface Props {
   server: Record<string, any>,
@@ -112,6 +132,24 @@ const sni = computed({
   },
   set(val) {
     server.value.sni = val
+    onServerUpdate()
+  }
+})
+const disableUDP = computed({
+  get() {
+    return server.value.disableUDP || false
+  },
+  set(val) {
+    server.value.disableUDP = val
+    onServerUpdate()
+  }
+})
+const fastOpen = computed({
+  get() {
+    return server.value.fastOpen || false
+  },
+  set(val) {
+    server.value.fastOpen = val
     onServerUpdate()
   }
 })
