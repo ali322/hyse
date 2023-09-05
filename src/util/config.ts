@@ -1,37 +1,38 @@
-const defaultSettings =  {
-  "server": "",
-  "protocol": "wechat-video",
-  "auth_str": "",
-  "up_mbps": 10,
-  "down_mbps": 500,
-  "fast_open": true,
-  "acl": "",
-  "mmdb": "",
-  "alpn": "h3",
-  "socks5": {
-    "listen": ""
-  },
-  "http": {
-    "listen": ""
-  }
-}
+import YAML from 'yaml'
 
-export const mergeSettings = (
-  server: Record<string, any>,
-  settings: Record<string, any>,
-  resDir: string
-) => {
-  let next = Object.assign({}, defaultSettings, {
+export default (server: Record<string, any>, settings: Record<string, any>) => {
+  const config = YAML.stringify({
     server: `${server.address}:${server.port}`,
-    auth_str: server.password,
-    acl: `${resDir}etc/client.acl`,
-    mmdb: `${resDir}etc/GeoLite2-Country.mmdb`,
-    socks5: {
-      listen: `127.0.0.1:${settings.socksPort}`
+    auth: server.password,
+    obfs: {
+      type: "salamander",
+      salamander: {
+        password: "fuckme"
+      }
     },
-    // http: {
-    //   listen: `127.0.0.1:${settings.httpPort}`
-    // }
+    tls: {
+      sni: server.sni,
+      insecure: false
+    },
+    quic: {
+      initStreamReceiveWindow: 8388608,
+      maxStreamReceiveWindow: 8388608,
+      initConnReceiveWindow: 20971520,
+      maxConnReceiveWindow: 20971520,
+      maxIdleTimeout: '30s',
+      keepAlivePeriod: '10s',
+      disablePathMTUDiscovery: false,
+    },
+    bandwidth: {
+      up: '50 mbps',
+      down: '300 mbps'
+    },
+    fastOpen: server.fastOpen || false,
+    lazy: true,
+    socks5: {
+      listen: `127.0.0.1:${settings.socksPort}`,
+      disableUDP: server.disableUDP || false
+    }
   })
-  return next
+  return config
 }

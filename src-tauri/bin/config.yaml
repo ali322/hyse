@@ -1,0 +1,25 @@
+server: la.aliz.work:8443
+auth: 9448new
+obfs:
+  type: salamander
+  salamander:
+    password: fuckme
+tls:
+  sni: la.aliz.work
+  insecure: false
+quic:
+  initStreamReceiveWindow: 8388608
+  maxStreamReceiveWindow: 8388608
+  initConnReceiveWindow: 20971520
+  maxConnReceiveWindow: 20971520
+  maxIdleTimeout: 30s
+  keepAlivePeriod: 10s
+  disablePathMTUDiscovery: false
+bandwidth:
+  up: 50 mbps
+  down: 300 mbps
+fastOpen: true
+lazy: true
+socks5:
+  listen: 127.0.0.1:1081
+  disableUDP: true
